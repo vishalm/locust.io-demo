@@ -1,1 +1,1 @@
-FROM python:3.7
+FROM 2.7.11-onbuild
