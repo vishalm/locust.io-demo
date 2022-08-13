@@ -1,4 +1,12 @@
 # Distributed Example
+```bash
+cd distributed
+pip3 install virutalenv
+python3 virutalenv .env
+pip3 install -r requirements.txt
+source .env/bin/activate
+locust -f locustfile.py  --host=http://localhost:9966
+```
 This example takes the quickstart example and makes it distributed. When
 `docker-compose up -d` is ran only the target and the locust master will
 come up, the slave will die right away (because by the time it tries to
