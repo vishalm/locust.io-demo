@@ -1,21 +1,23 @@
-from locust import HttpLocust, TaskSet
+from locust import HttpUser, between, task
 
-def login(l):
-    l.client.post("/login", {"username":"admin", "password":"admin"})
 
-def index(l):
-    l.client.get("/")
+class WebsiteUser(HttpUser):
+    wait_time = between(5, 15)
+    @task
+    def login(l):
+        l.client.get("/")
 
-def profile(l):
-    l.client.get("/profile")
+    @task
+    def welcome(l):
+        l.client.get("/petclinic/welcome")
 
-class UserBehavior(TaskSet):
-    tasks = {index:2, profile:1}
-
-    def on_start(self):
-        login(self)
-
-class WebsiteUser(HttpLocust):
-    task_set = UserBehavior
-    min_wait=1000
-    max_wait=1000
+    @task
+    def owners(l):
+        l.client.get("/petclinic/owners")
+    
+    @task
+    def pettypes(l):
+        l.client.get("/petclinic/pettypes")
+    @task  
+    def specialties(l):
+        l.client.get("/petclinic/specialties")
